@@ -7,10 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'BMI-calculator';
-
-  bmi = 0;
-  onBmiCalculate(bmi: number) {
-    this.bmi = bmi;
-    console.log('parent', bmi);
-  }
 }

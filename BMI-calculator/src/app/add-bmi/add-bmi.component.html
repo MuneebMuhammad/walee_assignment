@@ -1,0 +1,10 @@
+<div>
+  <app-display-bmi
+    style="display: flex; justify-content: center"
+    [bmiVal]="bmi"
+  ></app-display-bmi>
+  <app-bmi-data
+    (bmiEvent)="onBmiCalculate($event)"
+    style="display: block; text-align: center"
+  ></app-bmi-data>
+</div>
