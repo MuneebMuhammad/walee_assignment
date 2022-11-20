@@ -1,0 +1,9 @@
+<h2 style="text-align: center; color: rgb(236, 77, 77)">BMI Calculator</h2>
+<app-display-bmi
+  style="display: flex; justify-content: center"
+  [bmiVal]="bmi"
+></app-display-bmi>
+<app-bmi-data
+  (bmiEvent)="onBmiCalculate($event)"
+  style="display: block; text-align: center"
+></app-bmi-data>

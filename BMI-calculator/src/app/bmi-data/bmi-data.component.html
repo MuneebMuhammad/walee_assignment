@@ -1,0 +1,36 @@
+<form>
+  <label class="data-label" for="weight">Weight: </label>
+  <input
+    class="data-input"
+    id="weight"
+    type="number"
+    placeholder="pounds"
+    [(ngModel)]="weight"
+    name="weight"
+    style="margin-right: 20px"
+  />
+  <label class="data-label" for="height">Height: </label>
+  <input
+    class="data-input"
+    id="height"
+    type="number"
+    placeholder="inches"
+    [(ngModel)]="height"
+    name="height"
+  />
+  <br />
+  <button
+    (click)="calculate_bmi()"
+    style="
+      background-color: rgb(72, 211, 72);
+      color: white;
+      height: 40px;
+      width: 100px;
+      border-radius: 10px;
+      margin-top: 20px;
+      border: 0px;
+    "
+  >
+    Calculate
+  </button>
+</form>
