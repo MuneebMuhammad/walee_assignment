@@ -1,0 +1,23 @@
+.data-input{
+    width: 70px;
+    height: 30px;
+}
+
+.data-label{
+    font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.data-sbt-btn{
+    background-color: rgb(72, 211, 72);
+    color: white;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    margin-top: 20px;
+    border: 0px;
+}
+.data-sbt-btn:hover{
+    background-color: rgb(139, 165, 235) ;
+    height: 45px;
+    box-shadow: 5px;
+}
