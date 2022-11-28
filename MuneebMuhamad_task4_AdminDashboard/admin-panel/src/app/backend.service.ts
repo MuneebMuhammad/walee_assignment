@@ -26,4 +26,30 @@ export class BackendService {
       this.httpOptions
     );
   }
+
+  registerStudent(name: string, contact: string) {
+    console.log('in register student fucntion');
+    return this.httpClient.post(
+      this.baseUrl + '/registerStudent',
+      { name, contact },
+      this.httpOptions
+    );
+  }
+
+  deleteStudent(cms: number) {
+    console.log('in student delete function: ', cms);
+    return this.httpClient.delete(
+      this.baseUrl + '/deleteStudent/' + cms,
+      this.httpOptions
+    );
+  }
+
+  updateStudentInfo(name: string, cms: number, batch: number, contact: string) {
+    console.log('in update function');
+    return this.httpClient.put(
+      this.baseUrl + '/updateStudentInfo',
+      { name, cms, batch, contact },
+      this.httpOptions
+    );
+  }
 }

@@ -1,1 +1,202 @@
-<p>display-students works!</p>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<div>
+  <div
+    style="margin-top: 20px"
+    class="card w-50"
+    *ngFor="let student of students"
+  >
+    <div class="card-body">
+      <h5 class="card-title">{{ student.name }}</h5>
+      <div style="float: left">
+        <p class="card-text">
+          <b>Reg no: </b> {{ student.cms }}
+          <br />
+          <b>Batch: </b> {{ student.batch }}
+          <br />
+          <b>Contact: </b> {{ student.contact }}
+        </p>
+        <a
+          (click)="
+            handleEditInfo(
+              student.name,
+              student.cms,
+              student.batch,
+              student.contact
+            )
+          "
+          data-bs-toggle="modal"
+          data-bs-target="#editInfoModal"
+          class="btn btn-info"
+          style="margin-right: 5px"
+          >Edit info</a
+        >
+        <a href="#" class="btn btn-success" style="margin-right: 5px">Fees</a>
+        <a href="#" class="btn btn-primary">Courses</a>
+      </div>
+      <div style="float: right">
+        <button
+          (click)="deleteStudent(student.cms)"
+          class="btn btn-danger"
+          style="margin-top: 25px"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<button
+  class="btn btn-primary"
+  style="
+    right: 20px;
+    left: 'auto';
+    top: 'auto';
+    bottom: 20px;
+    position: 'fixed';
+    border-radius: 20px;
+  "
+  data-bs-toggle="modal"
+  data-bs-target="#addStudentModal"
+>
+  <i class="fa fa-plus"></i>
+</button>
+
+<!--Register Student Modal-->
+<div class="modal fade" id="addStudentModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register Student</h5>
+        <button
+          (click)="promptOff()"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <legend>Name</legend>
+          <input
+            class="form-control"
+            id="name"
+            type="text"
+            name="name"
+            placeholder="Full name"
+            [(ngModel)]="name"
+          />
+          <br />
+          <legend>Contact</legend>
+          <input
+            class="form-control w-50"
+            id="contact"
+            type="text"
+            name="contact"
+            placeholder="+92 "
+            [(ngModel)]="contact"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div *ngIf="registerSuccess">
+          <p style="color: green">Successfully registered</p>
+        </div>
+        <div *ngIf="registerError">
+          <p style="color: red">Fill all fields</p>
+        </div>
+        <button
+          (click)="promptOff()"
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          (click)="handleAddStudent()"
+          type="button"
+          class="btn btn-primary"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Student Info Modal-->
+<div class="modal fade" id="editInfoModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Student Details</h5>
+        <button
+          (click)="promptOff()"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <legend>Name:</legend>
+          <input
+            class="form-control"
+            id="name"
+            type="text"
+            name="name"
+            placeholder="{{ nameUpdata }}"
+            [(ngModel)]="nameUpdata"
+          />
+          <br />
+          <legend>Contact</legend>
+          <input
+            class="form-control w-50"
+            id="contact"
+            type="text"
+            name="contact"
+            placeholder="{{ contactUpdata }}"
+            [(ngModel)]="contactUpdata"
+          />
+          <legend>Batch</legend>
+          <input
+            class="form-control w-50"
+            id="batch"
+            type="text"
+            name="batch"
+            placeholder="{{ batchUpdate }}"
+            [(ngModel)]="batchUpdate"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div *ngIf="updateInfoSuccess">
+          <p style="color: green">Successfully Updaed Student</p>
+        </div>
+        <div *ngIf="updateInfoError">
+          <p style="color: red">Incorrect Input</p>
+        </div>
+        <button
+          (click)="promptOff()"
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          (click)="handleSubmitUpdate()"
+          type="button"
+          class="btn btn-primary"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

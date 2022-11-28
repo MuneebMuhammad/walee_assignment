@@ -9,7 +9,7 @@ export class BmiService {
   bmi_data: BMI[] = [];
 
   constructor() {
-    if (localStorage.length != 0) {
+    if (localStorage['bmi_data'] != undefined) {
       this.bmi_data = JSON.parse(localStorage['bmi_data']);
     }
   }
@@ -25,7 +25,7 @@ export class BmiService {
     localStorage.setItem('bmi_data', JSON.stringify(this.bmi_data));
   }
   get_bmis() {
-    if (localStorage.length == 0) {
+    if (localStorage['bmi_data'] == undefined) {
       return -1;
     }
     var mydata = JSON.parse(localStorage['bmi_data']);
