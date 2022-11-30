@@ -23,6 +23,11 @@ const AdminSchema = new mongoose.Schema({
     }
 })
 
+// const TodoSchema = new mongoose.Schema({
+//     todoName: {type: String},
+//     finish: {type: Boolean}
+// })
+
 const StudentSchmea = new mongoose.Schema({
     name: {
         type: String,
@@ -30,7 +35,8 @@ const StudentSchmea = new mongoose.Schema({
     },
     cms: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     batch: {
         type: Number,
@@ -39,11 +45,11 @@ const StudentSchmea = new mongoose.Schema({
     contact: {
         type: String
     },
-    fees: {
-        type: Object
-    },
-    courses: {
-        type: Object
+    todos: {
+        type: [{
+            todoName: {type: String},
+            finish: {type: Boolean}
+        }],
     }
 })
 
@@ -88,6 +94,32 @@ app.delete('/deleteStudent/:cms', async(req, res)=>{
 app.put('/updateStudentInfo', async(req, res)=>{
     await StudentModel.findOneAndUpdate({cms: req.body.cms}, {name: req.body.name, batch: req.body.batch, contact: req.body.contact})
     res.json(true)
+})
+
+app.get('/getTodos/:cms', async(req, res)=>{
+    console.log("in get todos server: ", req.body)
+    studentTodos = await StudentModel.find({cms: req.params.cms}).select({todos: 1, _id: 0})
+    res.json(studentTodos[0].todos)
+})
+
+app.put('/addTodo/:cms', async(req, res)=>{
+    console.log("in add todo server: ", req.body)
+    studentData = await StudentModel.findOneAndUpdate({cms: req.params.cms}, {$push: {todos: {finish: false, todoName: req.body.todoName }}})
+    res.json("yes")
+})
+
+app.put('/changeTodo/:cms', async(req, res)=>{
+    console.log("in change todo status server: ", req.params.cms, req.body)
+    studentData = await StudentModel.updateOne({cms: req.params.cms, 'todos._id': req.body.todoId}, {'todos.$.finish': !req.body.todoStatus})
+    console.log("studentData: ", studentData)
+    res.json(studentData)
+})
+
+app.put('/deleteTodo/:cms', async(req, res)=>{
+    console.log("in delete todo server", req.params.cms, req.body.todoId)
+    dataResponse = await StudentModel.updateOne({cms: req.params.cms, "todos.id": req.body.todoId}, {$pull: {todos: {_id: req.body.todoId}}})
+    // dataResponse = await StudentModel.find({"todos._id": req.body.todoId})
+    res.json(dataResponse)
 })
 
 app.listen(3000, ()=>{

@@ -52,4 +52,26 @@ export class BackendService {
       this.httpOptions
     );
   }
+
+  getTodos(cms: number) {
+    console.log('in get todos function');
+    return this.httpClient.get(this.baseUrl + '/getTodos/' + cms);
+  }
+
+  addTodo(cms: number, todoName: string) {
+    console.log('in add todo function');
+    return this.httpClient.put(this.baseUrl + '/addTodo/' + cms, { todoName });
+  }
+
+  changeTodo(cms: number, todoId: string, todoStatus: boolean) {
+    console.log('todoStatus: ', todoStatus);
+    return this.httpClient.put(this.baseUrl + '/changeTodo/' + cms, {
+      todoId,
+      todoStatus,
+    });
+  }
+
+  deleteTodo(cms: number, todoId: string) {
+    return this.httpClient.put(this.baseUrl + '/deleteTodo/' + cms, { todoId });
+  }
 }
