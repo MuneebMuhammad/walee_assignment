@@ -11,6 +11,7 @@ export class TodosComponent implements OnInit {
   todos?: any;
   cms?: any;
   newTodo?: string;
+  user?: any;
 
   constructor(
     private backendService: BackendService,
@@ -19,6 +20,7 @@ export class TodosComponent implements OnInit {
 
   ngOnInit(): void {
     this.cms = this.route.snapshot.paramMap.get('cms');
+    this.user = this.route.snapshot.paramMap.get('user');
     this.get_todos();
   }
 

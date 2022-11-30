@@ -24,10 +24,15 @@ export class LoginComponent implements OnInit {
     await this.backendService
       .authenticateAdmin(this.email, this.password)
       .subscribe((r) => {
-        if (r == true) {
+        if (r == 'admin') {
           this.router.navigate(['/home']);
           this.correctUser = true;
-        } else this.correctUser = false;
+        } else if (r == false) {
+          this.correctUser = false;
+        } else {
+          this.router.navigate([`/todos/student/${r}`]);
+          this.correctUser = true;
+        }
       });
   }
 }

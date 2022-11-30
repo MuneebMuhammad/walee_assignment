@@ -33,6 +33,10 @@ const StudentSchmea = new mongoose.Schema({
         type: String,
         required: true
     },
+    password: {
+        type: String,
+        required: true
+    },
     cms: {
         type: Number,
         required: true,
@@ -62,17 +66,33 @@ app.post('/login', async (req, res)=>{
     admin_data = await AdminModel.find({username: req.body.u, password: req.body.p}).select({_id: 0})
     console.log(admin_data)
     if (admin_data.length != 0){
-        res.json(true)
+        console.log("in admin condition")
+        res.json("admin")
     }
     else{
-        console.log('not found')
-        res.json(false)
+        console.log("id: ", req.body.u == NaN)
+        if (!isNaN(req.body.u)){
+            student_data = await StudentModel.find({cms: parseInt(req.body.u), password: req.body.p}).select({_id: 0, cms: 1})
+            console.log("in student condition. cms: ", student_data)
+            if (student_data.length !=0){
+                res.json(req.body.u)
+            }
+            else{
+                console.log('not found')
+                res.json(false)
+            }
+        }
+        else{
+            console.log('not a number entered')
+                res.json(false)
+        }
+        
     }
 })
 
 app.get('/getUsers', async (req, res)=>{
     console.log("now in get user server function")
-    usersData = await StudentModel.find({}).select({name: 1, cms: 1, batch: 1, contact: 1, _id: 0})
+    usersData = await StudentModel.find({}).select({name: 1, password: 1, cms: 1, batch: 1, contact: 1, _id: 0})
     console.log(usersData)
     res.json(usersData)
 })
@@ -80,7 +100,7 @@ app.get('/getUsers', async (req, res)=>{
 app.post('/registerStudent', async(req, res)=>{
     batch = new Date().getFullYear()
     max_cms = await StudentModel.find({}).select({cms: 1, _id: 0}).sort({"cms": -1}).limit(1)
-    newUser = new StudentModel({name: req.body.name, cms: ((max_cms[0].cms)+1), batch: (new Date().getFullYear()), contact: req.body.contact})
+    newUser = new StudentModel({name: req.body.name, cms: ((max_cms[0].cms)+1), password: req.body.password, batch: (new Date().getFullYear()), contact: req.body.contact})
     await newUser.save()
     res.json(true)
 })
@@ -92,7 +112,7 @@ app.delete('/deleteStudent/:cms', async(req, res)=>{
 })
 
 app.put('/updateStudentInfo', async(req, res)=>{
-    await StudentModel.findOneAndUpdate({cms: req.body.cms}, {name: req.body.name, batch: req.body.batch, contact: req.body.contact})
+    await StudentModel.findOneAndUpdate({cms: req.body.cms}, {name: req.body.name, batch: req.body.batch, contact: req.body.contact, password: req.body.password})
     res.json(true)
 })
 

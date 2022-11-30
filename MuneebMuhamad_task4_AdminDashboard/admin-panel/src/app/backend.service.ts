@@ -27,11 +27,11 @@ export class BackendService {
     );
   }
 
-  registerStudent(name: string, contact: string) {
+  registerStudent(name: string, contact: string, password: string) {
     console.log('in register student fucntion');
     return this.httpClient.post(
       this.baseUrl + '/registerStudent',
-      { name, contact },
+      { name, contact, password },
       this.httpOptions
     );
   }
@@ -44,11 +44,17 @@ export class BackendService {
     );
   }
 
-  updateStudentInfo(name: string, cms: number, batch: number, contact: string) {
+  updateStudentInfo(
+    name: string,
+    cms: number,
+    batch: number,
+    contact: string,
+    password: string
+  ) {
     console.log('in update function');
     return this.httpClient.put(
       this.baseUrl + '/updateStudentInfo',
-      { name, cms, batch, contact },
+      { name, cms, batch, contact, password },
       this.httpOptions
     );
   }

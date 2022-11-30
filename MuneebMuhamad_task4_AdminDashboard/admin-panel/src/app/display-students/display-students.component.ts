@@ -11,6 +11,7 @@ export class DisplayStudentsComponent implements OnInit {
   students?: any;
   name = '';
   contact = '';
+  password = '';
   registerSuccess = false;
   registerError = false;
   updateInfoSuccess = false;
@@ -20,6 +21,7 @@ export class DisplayStudentsComponent implements OnInit {
   contactUpdata = '';
   batchUpdate?: number;
   cmsUpdate?: number;
+  passwordUpdate = '';
 
   constructor(private backendService: BackendService) {}
 
@@ -39,10 +41,10 @@ export class DisplayStudentsComponent implements OnInit {
   }
 
   handleAddStudent() {
-    if (this.name != '' && this.contact != '') {
+    if (this.name != '' && this.contact != '' && this.password != '') {
       console.log('allow');
       this.backendService
-        .registerStudent(this.name, this.contact)
+        .registerStudent(this.name, this.contact, this.password)
         .subscribe((r) => {
           this.getAllStudents();
           this.registerSuccess = true;
@@ -63,11 +65,18 @@ export class DisplayStudentsComponent implements OnInit {
       .subscribe((r) => this.getAllStudents());
   }
 
-  handleEditInfo(name: string, cms: number, batch: number, contact: string) {
+  handleEditInfo(
+    name: string,
+    cms: number,
+    batch: number,
+    contact: string,
+    password: string
+  ) {
     this.nameUpdata = name;
     this.batchUpdate = batch;
     this.contactUpdata = contact;
     this.cmsUpdate = cms;
+    this.passwordUpdate = password;
   }
 
   handleSubmitUpdate() {
@@ -82,7 +91,8 @@ export class DisplayStudentsComponent implements OnInit {
           this.nameUpdata,
           this.cmsUpdate,
           this.batchUpdate,
-          this.contactUpdata
+          this.contactUpdata,
+          this.passwordUpdate
         )
         .subscribe(() => {
           this.getAllStudents();

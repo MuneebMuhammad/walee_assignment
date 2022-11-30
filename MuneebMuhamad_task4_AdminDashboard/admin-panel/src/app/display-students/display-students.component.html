@@ -24,7 +24,8 @@
               student.name,
               student.cms,
               student.batch,
-              student.contact
+              student.contact,
+              student.password
             )
           "
           data-bs-toggle="modal"
@@ -92,6 +93,16 @@
             [(ngModel)]="name"
           />
           <br />
+          <legend>Password</legend>
+          <input
+            class="form-control w-50"
+            id="password"
+            type="password"
+            name="password"
+            placeholder="password"
+            [(ngModel)]="password"
+          />
+          <br />
           <legend>Contact</legend>
           <input
             class="form-control w-50"
@@ -154,6 +165,16 @@
             name="name"
             placeholder="{{ nameUpdata }}"
             [(ngModel)]="nameUpdata"
+          />
+          <br />
+          <legend>Password</legend>
+          <input
+            class="form-control w-50"
+            id="Password"
+            type="text"
+            name="Password"
+            placeholder="{{ passwordUpdate }}"
+            [(ngModel)]="passwordUpdate"
           />
           <br />
           <legend>Contact</legend>

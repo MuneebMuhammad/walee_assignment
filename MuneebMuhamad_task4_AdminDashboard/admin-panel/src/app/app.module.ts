@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DisplayStudentsComponent } from './display-students/display-students.component';
 import { TodosComponent } from './todos/todos.component';
+import { StudentHomeComponent } from './student-home/student-home.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { TodosComponent } from './todos/todos.component';
     NavbarComponent,
     DisplayStudentsComponent,
     TodosComponent,
+    StudentHomeComponent,
   ],
   imports: [FormsModule, BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
