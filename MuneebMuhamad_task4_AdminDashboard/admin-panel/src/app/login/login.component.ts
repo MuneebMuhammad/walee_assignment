@@ -13,7 +13,9 @@ export class LoginComponent implements OnInit {
   password: string = '';
   correctUser: boolean = true;
 
-  constructor(private router: Router, private backendService: BackendService) {}
+  constructor(private router: Router, private backendService: BackendService) {
+    sessionStorage.removeItem('user');
+  }
 
   ngOnInit(): void {}
 
@@ -25,11 +27,13 @@ export class LoginComponent implements OnInit {
       .authenticateAdmin(this.email, this.password)
       .subscribe((r) => {
         if (r == 'admin') {
+          sessionStorage.setItem('user', 'admin');
           this.router.navigate(['/home']);
           this.correctUser = true;
         } else if (r == false) {
           this.correctUser = false;
         } else {
+          sessionStorage.setItem('user', JSON.stringify(r));
           this.router.navigate([`/todos/student/${r}`]);
           this.correctUser = true;
         }

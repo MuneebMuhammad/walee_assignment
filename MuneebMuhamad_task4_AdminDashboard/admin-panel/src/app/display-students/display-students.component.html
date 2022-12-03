@@ -186,6 +186,9 @@
             placeholder="{{ contactUpdata }}"
             [(ngModel)]="contactUpdata"
           />
+          <span *ngIf="contactError" style="color: red"
+            >Invalid contact number</span
+          >
           <legend>Batch</legend>
           <input
             class="form-control w-50"
@@ -195,6 +198,9 @@
             placeholder="{{ batchUpdate }}"
             [(ngModel)]="batchUpdate"
           />
+          <span *ngIf="batchYearError" style="color: red"
+            >Batch year out of range</span
+          >
         </form>
       </div>
       <div class="modal-footer">

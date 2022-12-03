@@ -16,6 +16,8 @@ export class DisplayStudentsComponent implements OnInit {
   registerError = false;
   updateInfoSuccess = false;
   updateInfoError = false;
+  batchYearError = false;
+  contactError = false;
 
   nameUpdata = '';
   contactUpdata = '';
@@ -38,9 +40,21 @@ export class DisplayStudentsComponent implements OnInit {
     this.registerSuccess = false;
     this.updateInfoError = false;
     this.updateInfoSuccess = false;
+    this.batchYearError = false;
+    this.contactError = false;
+  }
+
+  checkValidContact(num: string) {
+    if (num[0] == '+' && num.length == 13) {
+      return true;
+    } else if (isNaN(Number(num[0])) == false && num.length == 11) {
+      return true;
+    }
+    return false;
   }
 
   handleAddStudent() {
+    this.contact = this.contact.replace(' ', '');
     if (this.name != '' && this.contact != '' && this.password != '') {
       console.log('allow');
       this.backendService
@@ -74,30 +88,41 @@ export class DisplayStudentsComponent implements OnInit {
   ) {
     this.nameUpdata = name;
     this.batchUpdate = batch;
-    this.contactUpdata = contact;
+    this.contactUpdata = contact.replace(' ', '');
     this.cmsUpdate = cms;
     this.passwordUpdate = password;
   }
 
   handleSubmitUpdate() {
+    let currentYear = new Date().getFullYear();
+    console.log('current year: ', currentYear);
     if (
       this.nameUpdata &&
       this.batchUpdate &&
       this.contactUpdata &&
       this.cmsUpdate
     ) {
-      this.backendService
-        .updateStudentInfo(
-          this.nameUpdata,
-          this.cmsUpdate,
-          this.batchUpdate,
-          this.contactUpdata,
-          this.passwordUpdate
-        )
-        .subscribe(() => {
-          this.getAllStudents();
-          this.updateInfoSuccess = true;
-        });
+      // if (!this.checkValidContact(this.contactUpdata)) {
+      //   this.contactError = true;
+      // }
+      if (this.batchUpdate < 1980 || this.batchUpdate > currentYear) {
+        this.batchYearError = true;
+      }
+
+      if (this.batchYearError == false && this.contactError == false) {
+        this.backendService
+          .updateStudentInfo(
+            this.nameUpdata,
+            this.cmsUpdate,
+            this.batchUpdate,
+            this.contactUpdata,
+            this.passwordUpdate
+          )
+          .subscribe(() => {
+            this.getAllStudents();
+            this.updateInfoSuccess = true;
+          });
+      }
     }
   }
 }
