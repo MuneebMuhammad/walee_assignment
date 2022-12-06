@@ -9,7 +9,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-const MONGO_URI="mongodb+srv://muneeb121:muneeb121@cluster0.cywt96y.mongodb.net/UniversityAdmin?retryWrites=true&w=majority";
+const MONGO_URI="mongodb+srv://muneeb121:pass@cluster0.cywt96y.mongodb.net/UniversityAdmin?retryWrites=true&w=majority";
 const conn = mongoose.connect(MONGO_URI)
 
 const AdminSchema = new mongoose.Schema({
