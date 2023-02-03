@@ -9,4 +9,4 @@ Students can login and check the tasks to perform and can mark a task to be comp
 ### How to run:
 * Open two terminals
 * In one terminal run "node server.js"
-* In another terminal change into "Admin directory" and run "ng serve --open"
+* In another terminal change into "admin-panel directory" and run "ng serve --open"
